@@ -1,0 +1,111 @@
+% Encoding: UTF-8
+
+@InProceedings{beller2017oops,
+  author       = {Beller, Moritz and Gousios, Georgios and Zaidman, Andy},
+  title        = {Oops, my tests broke the build: An explorative analysis of Travis CI with GitHub},
+  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
+  year         = {2017},
+  pages        = {356--367},
+  organization = {IEEE},
+}
+
+@InProceedings{cito2017empirical,
+  author       = {Cito, J{\"u}rgen and Schermann, Gerald and Wittern, John Erik and Leitner, Philipp and Zumberi, Sali and Gall, Harald C},
+  title        = {An empirical analysis of the Docker container ecosystem on GitHub},
+  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
+  year         = {2017},
+  pages        = {323--333},
+  organization = {IEEE},
+}
+
+@InProceedings{rausch2017empirical,
+  author       = {Rausch, Thomas and Hummer, Waldemar and Leitner, Philipp and Schulte, Stefan},
+  title        = {An empirical analysis of build failures in the continuous integration workflows of Java-based open-source software},
+  booktitle    = {Proceedings of the 14th International Conference on Mining Software Repositories},
+  year         = {2017},
+  pages        = {345--355},
+  organization = {IEEE Press},
+}
+
+@InProceedings{zampetti2017open,
+  author       = {Zampetti, Fiorella and Scalabrino, Simone and Oliveto, Rocco and Canfora, Gerardo and Di Penta, Massimiliano},
+  title        = {How open source projects use static code analysis tools in continuous integration pipelines},
+  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
+  year         = {2017},
+  pages        = {334--344},
+  organization = {IEEE},
+}
+
+@InProceedings{vassallo2017tale,
+  author       = {Vassallo, Carmine and Schermann, Gerald and Zampetti, Fiorella and Romano, Daniele and Leitner, Philipp and Zaidman, Andy and Di Penta, Massimiliano and Panichella, Sebastiano},
+  title        = {A tale of CI build failures: An open source and a financial organization perspective},
+  booktitle    = {Software Maintenance and Evolution (ICSME), 2017 IEEE International Conference on},
+  year         = {2017},
+  pages        = {183--193},
+  organization = {IEEE},
+}
+
+@InProceedings{rebouccas2017does,
+  author       = {Rebou{\c{c}}as, Marcel and Santos, Renato O and Pinto, Gustavo and Castor, Fernando},
+  title        = {How does contributors' involvement influence the build status of an open-source software project?},
+  booktitle    = {Proceedings of the 14th International Conference on Mining Software Repositories},
+  year         = {2017},
+  pages        = {475--478},
+  organization = {IEEE Press},
+}
+
+@InProceedings{islam2017insights,
+  author       = {Islam, Md Rakibul and Zibran, Minhaz F},
+  title        = {Insights into continuous integration build failures},
+  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
+  year         = {2017},
+  pages        = {467--470},
+  organization = {IEEE},
+}
+
+@InProceedings{zhao2017impact,
+  author       = {Zhao, Yangyang and Serebrenik, Alexander and Zhou, Yuming and Filkov, Vladimir and Vasilescu, Bogdan},
+  title        = {The impact of continuous integration on other software development practices: a large-scale empirical study},
+  booktitle    = {Proceedings of the 32nd IEEE/ACM International Conference on Automated Software Engineering},
+  year         = {2017},
+  pages        = {60--71},
+  organization = {IEEE Press},
+}
+
+@InProceedings{palomba2017does,
+  author       = {Palomba, Fabio and Zaidman, Andy},
+  title        = {Does refactoring of test smells induce fixing flaky tests?},
+  booktitle    = {Software Maintenance and Evolution (ICSME), 2017 IEEE International Conference on},
+  year         = {2017},
+  pages        = {1--12},
+  organization = {IEEE},
+}
+
+@InProceedings{gousios2017mining,
+  author       = {Gousios, Georgios and Spinellis, Diomidis},
+  title        = {Mining software engineering data from GitHub},
+  booktitle    = {Software Engineering Companion (ICSE-C), 2017 IEEE/ACM 39th International Conference on},
+  year         = {2017},
+  pages        = {501--502},
+  organization = {IEEE},
+}
+
+@InProceedings{souza2017sentiment,
+  author       = {Souza, Rodrigo and Silva, Bruno},
+  title        = {Sentiment analysis of Travis CI builds},
+  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
+  year         = {2017},
+  pages        = {459--462},
+  organization = {IEEE},
+}
+
+@InProceedings{ni2017cost,
+  author       = {Ni, Ansong and Li, Ming},
+  title        = {Cost-effective build outcome prediction using cascaded classifiers},
+  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
+  year         = {2017},
+  pages        = {455--458},
+  organization = {IEEE},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
