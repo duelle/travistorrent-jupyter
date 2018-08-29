@@ -19,6 +19,8 @@ tt_end_epoch <- tt_start_epoch + tt_duration
 #tt_end_epoch <- as.POSIXct(as.POSIXlt(tt_end_epoch), format="%Y-%m-%d %H:%M")
 tt_end_epoch <- strptime(tt_end_epoch, "%Y-%m-%d %H:%M")
 
+write.csv(tt,file="/tmp/my.csv")
+
 # Find min and max time
 time_min <- min(tt_start_epoch)
 time_max <- max(as.POSIXct(tt_end_epoch))
