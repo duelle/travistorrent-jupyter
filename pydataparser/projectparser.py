@@ -2,7 +2,7 @@
 
 from os.path import isdir, isfile
 from curses.ascii import isprint
-from shutil import copy2,move
+from shutil import copy2,move,copyfileobj
 import os
 import re
 import glob
@@ -11,49 +11,98 @@ import tempfile
 import concurrent.futures
 import time
 
-project_dir = "/run/media/duelle/54d52ebe-c232-4b11-a60f-e62374a99090/travistorrent/buildlogs/20-12-2016"
-result_dir = "/run/media/duelle/54d52ebe-c232-4b11-a60f-e62374a99090/travistorrent/extracted"
-target_dir = "/tmp/tt"
+# If set to true, the results will be stored in /tmp/ directory instead of externally
+local_test = False
+
+# We skip projects that have been extracted already. If they should be overwritten instead, set this to True
+overwrite_enabled = False
+
+parallel_enabled = True
+max_parallel_workers = 7
+
+if local_test:
+    extdisk_path = "/tmp/tt_test/travistorrent"
+else:
+    extdisk_path = "/run/media/duelle/54d52ebe-c232-4b11-a60f-e62374a99090/travistorrent"
+
+project_dir = extdisk_path + os.sep + "buildlogs/20-12-2016"
+result_dir =  extdisk_path + os.sep + "extracted"
+
+buildlog_path = result_dir + os.sep + "buildlogs"
+buildlog_file = "buildlog-data-travis.csv"
+
+repodata_path = result_dir + os.sep + "repodata"
+repodata_file = "repo-data-travis.csv"
+
+temporary_dir = "/tmp/tt"
 regex1c = re.compile(r'\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]')
 rexex2c = re.compile(r'^M\n')
 
-def process_project(src_file_name):
-    with tempfile.TemporaryDirectory() as temp_dir:
-        if src_file_name.endswith(".tgz"):
-            file_name = temp_dir + os.sep + src_file_name
-            copy2(project_dir + os.sep + src_file_name, file_name)
-            project_name = os.path.basename(file_name)[:-4] # remove file extension
 
+def process_project(src_file_name):
+    if src_file_name.endswith(".tgz"):
+
+        project_name = os.path.basename(src_file_name)[:-4]  # remove file extension
+        temp_log_file_name = temporary_dir + os.sep + "tt_" + project_name + ".csv"
+        log_file_basename = os.path.basename(temp_log_file_name)
+
+        target_log_file = result_dir + os.sep + log_file_basename
+
+        if os.path.isfile(target_log_file) and not overwrite_enabled:
+            print(project_name + " skipped (exists).")
+
+        else:
             print(project_name + " started.")
 
-            tar = tarfile.open(file_name)
-            tar.extractall(path=temp_dir)
-            parse_dir = temp_dir + os.sep + project_name + os.sep
-            tar.close()
-            listing = glob.glob(parse_dir + "*.log")
+            with tempfile.TemporaryDirectory() as temp_dir:
+                file_name = temp_dir + os.sep + src_file_name
 
-            header_line = "build_number;build_id;job_id;startup;step_firststart;step_lastend;diffduration;logaggregatedduration;worker_hostname;worker_version;worker_instance;os_dist_id;os_description;os_dist_release"
+                parse_dir = temp_dir + os.sep + project_name
 
-            log_file_name = target_dir + os.sep + "tt_" + project_name + ".csv"
-            log_file_basename = os.path.basename(log_file_name)
+                copy2(project_dir + os.sep + src_file_name, file_name)
 
-            with open(log_file_name, "w") as out_log:
-                out_log.write(header_line + "\n")
+                tar = tarfile.open(file_name)
+                tar.extractall(path=temp_dir)
+                tar.close()
 
-                for log_file in listing:
-                    filename_parts = os.path.basename(log_file)[:-4].split('_')
-                    build_number = filename_parts[0]
-                    build_id = filename_parts[1]
-                    job_id = filename_parts[3]
+                log_listing = glob.glob(parse_dir + os. sep + "*.log")
 
-                    log_result = parse_log(sanitize_log(log_file), build_id, project_name)
-                    if log_result != "":
-                        out_log.write(str(build_number) + ";"
-                                      + str(build_id) + ";"
-                                      + str(job_id) + ";"
-                                      + log_result + "\n")
+                header_line = "build_number;build_id;job_id;startup;step_firststart;step_lastend;diffduration;" +\
+                              "logaggregatedduration;worker_hostname;worker_version;worker_instance;os_dist_id;" +\
+                              "os_description;os_dist_release"
 
-            move(log_file_name, result_dir + os.sep + log_file_basename)
+                with open(temp_log_file_name, "w") as out_log:
+                    out_log.write(header_line + "\n")
+
+                    for log_file in log_listing:
+                        filename_parts = os.path.basename(log_file)[:-4].split('_')
+                        build_number = filename_parts[0]
+                        build_id = filename_parts[1]
+                        job_id = filename_parts[3]
+
+                        log_result = parse_log(sanitize_log(log_file), build_id, project_name)
+                        if log_result != "":
+                            out_log.write(str(build_number) + ";"
+                                          + str(build_id) + ";"
+                                          + str(job_id) + ";"
+                                          + log_result + "\n")
+
+                move(temp_log_file_name, target_log_file)
+
+                # copy project-level buildlogs
+                buildlog_file_path = parse_dir + os.sep + buildlog_file
+                if os.path.isfile(buildlog_file_path):
+                    copy2(buildlog_file_path, buildlog_path + os.sep + project_name + "_" + buildlog_file)
+                else:
+                    print(project_name + " has no buildlog file.")
+
+                # copy project-level repodata
+                repodata_file_path = parse_dir + os.sep + repodata_file
+                if os.path.isfile(repodata_file_path):
+                    copy2(repodata_file_path, repodata_path + os.sep + project_name + "_" + repodata_file)
+                else:
+                    print(project_name + " has no repodata file.")
+
             print(project_name + " finished.")
 
 
@@ -61,14 +110,12 @@ def sanitize_log(log_file):
     out_string = ""
     with open(log_file) as f:
         for line in f.readlines():
-
             out = line
             out = regex1c.sub('', out)
             out = rexex2c.sub('', out)
             out = "".join(filter(isprint, out))
             if out != "":
                 out_string += out + '\n'
-        #print(out_string)
     return out_string
 
 
@@ -112,7 +159,6 @@ def parse_log(log, build_id, project_name):
     worker_details_coming = False
 
     incomplete_command = ""
-
 
     for line in log.splitlines():
 
@@ -174,17 +220,24 @@ def parse_log(log, build_id, project_name):
     # If there was at least one step, record information for it
     if len(step_list) > 0:
 
-        result_list = [str(startup),first_start_timing,last_end_timing,str(int(last_end_timing) - int(first_start_timing)),str(total_log_duration),worker_hostname,worker_version,worker_instance,os_dist_id,os_description,os_dist_release]
+        result_list = [str(startup),
+                       first_start_timing,
+                       last_end_timing,
+                       str(int(last_end_timing) - int(first_start_timing)),
+                       str(total_log_duration),
+                       worker_hostname,
+                       worker_version,
+                       worker_instance,
+                       os_dist_id,
+                       os_description,
+                       os_dist_release]
         result_line = ";".join(result_list)
-        #result_line = str(startup) + ";" + first_start_timing + ";" + last_end_timing + ";" + str(int(last_end_timing) - int(first_start_timing)) + ";" + str(total_log_duration) + ";" + str(worker_hostname)
 
         # In case we want to have all details on the steps executed in the build, set detailed_steps to True.
         if detailed_steps:
-            with open(target_dir + os.sep + "tt_" + project_name + "_" + build_id + ".csv", "w") as out_log:
-                if startup == "":
-                    startup = 0
-                else:
-                    out_log.write(startup + '\n')
+            with open(temporary_dir + os.sep + "tt_" + project_name + "_" + build_id + ".csv", "w") as out_log:
+
+                out_log.write(startup + '\n')
 
                 out_log.write(''.join(step_list) + '\n')
 
@@ -194,28 +247,59 @@ def parse_log(log, build_id, project_name):
     return result_line
 
 
+def merge_csv_files(folder):
+    header_added = False
+    if os.path.isdir(folder):
+        target_name = os.path.basename(folder)
+        csv_listing = glob.glob(folder + os.sep + "*.csv")
+        if len(csv_listing) > 0:
+            with open(result_dir + os.sep + "0_" + target_name + ".csv", 'wb') as outfile:
+                for file in csv_listing:
+                    with open(file, 'rb') as infile:
+                        if header_added:
+                            infile.__next__()
+                        else:
+                            header_added = True
+                        copyfileobj(infile, outfile)
+
+
 if __name__ == '__main__':
     '''
     Traverses all tgz-files in the given folder and calls following process command.
     :param project_folder: folder that contains all project logs in tgz format
     :return: nothing
     '''
-    parallel_enabled = True
     start_time = time.time()
 
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)
+    if not os.path.exists(temporary_dir):
+        os.makedirs(temporary_dir)
+
+    if not os.path.exists(result_dir):
+        os.makedirs(result_dir)
+
+    if not os.path.exists(buildlog_path):
+        os.makedirs(buildlog_path)
+
+    if not os.path.exists(repodata_path):
+        os.makedirs(repodata_path)
 
     if parallel_enabled:
-        with concurrent.futures.ProcessPoolExecutor(max_workers=7) as executor:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=max_parallel_workers) as executor:
             for tar_file in os.listdir(project_dir):
                 if isdir(project_dir) and isfile(project_dir + os.sep + tar_file) and tar_file.endswith(".tgz"):
                     executor.submit(process_project,tar_file)
-
     else:
         for tar_file in os.listdir(project_dir):
             if isdir(project_dir) and isfile(project_dir + os.sep + tar_file) and tar_file.endswith(".tgz"):
                 process_project(tar_file)
+
+    if parallel_enabled:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=max_parallel_workers) as executor:
+            for csv_folder in [buildlog_path, repodata_path]:
+                merge_csv_files(csv_folder)
+    else:
+        for csv_folder in [buildlog_path, repodata_path]:
+            merge_csv_files(csv_folder)
 
     end_time = time.time()
     print("Done in %s" % (end_time - start_time))
