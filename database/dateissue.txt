@@ -1,0 +1,27 @@
+17:39 < x> Hello, is it possible to insert entries like "2016-07-06 21:16:06 UTC" into a 
+               datetime field? Do I need to remove the UTC to be compliant to the datetime 
+               format or is there a function that I can use?
+17:40 < x> Currently, I get an error when trying to insert that directly into a datetime 
+               field.
+17:44 < x> That's the error message: "SQL Error [1292] [22007]: (conn:13) Incorrect 
+               datetime value: '2016-07-06 21:16:06 UTC' for column X"
+17:54 < leucas> the date format is not correct
+17:59 < leucas> https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_str-to-date will convert the string, but you might have issues to match that "UTC" on all 
+                platforms
+18:01 < leucas> or rather https://mariadb.com/kb/en/library/str_to_date/
+18:01 < leucas> both don't have "%Z" or %z to match a timezone identifier, so that has to be 
+                done before or always match the fixed string "UTC"
+18:02 < leucas> given the date is ALWAYS in UTC
+18:06 < leucas> select str_to_date('2016-07-06 21:16:06 UTC', '%Y-%m-%d %H:%i:%s UTC');
+18:14 < x> leucas: Thank you. As far as I am aware of, all the dates have this suffix 
+               "UTC". Can I somehow apply that date function in the INSERT statement so the 
+               UTC does not even appear in the data?
+18:22 < leucas> sure https://stackoverflow.com/a/6927270
+18:23 < x> Great, thank you leucas !
+18:23 < leucas> However, IF the string format ever changes, STR_TO_DATE will fail "silently" 
+                and produce a NULL value instead of a date
+18:23 < leucas> it's not really good practice 
+18:24 < x> I need this only for a fixed dataset. When setting that field to NOT NULL I 
+               would at least be notified, right?
+18:24 < leucas> x: yes
+18:24 < x> Sounds like an approach to me ;)

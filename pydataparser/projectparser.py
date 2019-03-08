@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+# TODO:
+# - fix UTC issue: database/dateissue.txt
+# - create DDL for extracted data
+# - leave out headers in project files and put project name as column
+# - merge all project-logs together in one file
+# - run through all logs and import them into the database (repo-data, buildlog, extracted)
+
+
 from os.path import isdir, isfile
 from curses.ascii import isprint
 from shutil import copy2,move,copyfileobj
@@ -10,6 +18,7 @@ import tarfile
 import tempfile
 import concurrent.futures
 import time
+from datetime import timedelta
 
 # If set to true, the results will be stored in /tmp/ directory instead of externally
 local_test = False
@@ -17,7 +26,10 @@ local_test = False
 # We skip projects that have been extracted already. If they should be overwritten instead, set this to True
 overwrite_enabled = False
 
+# Parallel execution enabled
 parallel_enabled = True
+
+# Number of parallel workers (in case parallel execution is enabled
 max_parallel_workers = 7
 
 if local_test:
@@ -34,15 +46,28 @@ buildlog_file = "buildlog-data-travis.csv"
 repodata_path = result_dir + os.sep + "repodata"
 repodata_file = "repo-data-travis.csv"
 
+# Directory where unpacking and parsing is done (best-case in memory)
 temporary_dir = "/tmp/tt"
+
+# Regexes for removing color coding from travis log files
 regex1c = re.compile(r'\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]')
 rexex2c = re.compile(r'^M\n')
 
+# Regex used for parsing duration time format used for 'startup' field
+duration_regex = re.compile(r'((?P<hours>\d+?)h)?((?P<minutes>\d+?)m)?((?P<seconds>\d+?)s)?((?P<milliseconds>\d+?)ms)?')
+
 
 def process_project(src_file_name):
+
+    # Make sure input file is a .tgz file
     if src_file_name.endswith(".tgz"):
 
+        # Deduct project name from the file name without file type extension
         project_name = os.path.basename(src_file_name)[:-4]  # remove file extension
+
+        project = project_name.replace('@','/')
+
+
         temp_log_file_name = temporary_dir + os.sep + "tt_" + project_name + ".csv"
         log_file_basename = os.path.basename(temp_log_file_name)
 
@@ -67,9 +92,22 @@ def process_project(src_file_name):
 
                 log_listing = glob.glob(parse_dir + os. sep + "*.log")
 
-                header_line = "build_number;build_id;job_id;startup;step_firststart;step_lastend;diffduration;" +\
-                              "logaggregatedduration;worker_hostname;worker_version;worker_instance;os_dist_id;" +\
-                              "os_description;os_dist_release"
+                header_line = "build_number;" +\
+                              "build_id;" + \
+                              "project;" + \
+                              "commit_hash;" +\
+                              "job_id;" +\
+                              "startup_duration_seconds;" +\
+                              "step_first_start_timestamp;" +\
+                              "step_last_end_timestamp;" +\
+                              "duration_diff_timestamp;" +\
+                              "duration_aggregated_timestamp;" +\
+                              "worker_hostname;" +\
+                              "worker_version;" +\
+                              "worker_instance;" +\
+                              "os_dist_id;" +\
+                              "os_description;" +\
+                              "os_dist_release"
 
                 with open(temp_log_file_name, "w") as out_log:
                     out_log.write(header_line + "\n")
@@ -78,25 +116,29 @@ def process_project(src_file_name):
                         filename_parts = os.path.basename(log_file)[:-4].split('_')
                         build_number = filename_parts[0]
                         build_id = filename_parts[1]
+                        commit_hash = filename_parts[2]
                         job_id = filename_parts[3]
 
                         log_result = parse_log(sanitize_log(log_file), build_id, project_name)
                         if log_result != "":
                             out_log.write(str(build_number) + ";"
                                           + str(build_id) + ";"
+                                          + str(project) + ";"
+                                          + str(commit_hash) + ";"
                                           + str(job_id) + ";"
                                           + log_result + "\n")
 
+                # Move result log file to target folder
                 move(temp_log_file_name, target_log_file)
 
-                # copy project-level buildlogs
+                # Copy project-level buildlogs
                 buildlog_file_path = parse_dir + os.sep + buildlog_file
                 if os.path.isfile(buildlog_file_path):
                     copy2(buildlog_file_path, buildlog_path + os.sep + project_name + "_" + buildlog_file)
                 else:
                     print(project_name + " has no buildlog file.")
 
-                # copy project-level repodata
+                # Copy project-level repodata
                 repodata_file_path = parse_dir + os.sep + repodata_file
                 if os.path.isfile(repodata_file_path):
                     copy2(repodata_file_path, repodata_path + os.sep + project_name + "_" + repodata_file)
@@ -150,8 +192,8 @@ def parse_log(log, build_id, project_name):
     step_list = []
 
     first_start_timing = 0
-    last_end_timing = 0
-    total_log_duration = 0
+    step_last_end_timestamp = 0
+    duration_aggregated_timestamp = 0
 
     # Indicates whether the next line will be a travis command (command to execute)
     ttcmd_coming = False
@@ -164,7 +206,7 @@ def parse_log(log, build_id, project_name):
 
         # record startup time
         if line.startswith("startup:"):
-            startup = line.split(' ')[1]
+            startup = parse_time(line.split(' ')[1])
 
         if line.startswith("Operating System Details"):
             os_details_coming = True
@@ -192,8 +234,7 @@ def parse_log(log, build_id, project_name):
             if line.startswith("instance:"):
                 worker_instance = line.split(' ')[1]
 
-
-        # record travis command and remove flag
+        # Record travis command and remove flag
         elif ttcmd_coming:
             incomplete_command = line
             ttcmd_coming = False
@@ -210,21 +251,21 @@ def parse_log(log, build_id, project_name):
                 step_list.append(timings + ';' + incomplete_command + '\n')
                 incomplete_command = ""
 
-            if first_start_timing == 0:
-                first_start_timing = timings.split(';')[0]
+            if step_first_start_timestamp == 0:
+                step_first_start_timestamp = timings.split(';')[0]
 
-            last_end_timing = timings.split(';')[1]
+            step_last_end_timestamp = timings.split(';')[1]
 
-            total_log_duration += int(timings.split(';')[2])
+            duration_aggregated_timestamp += int(timings.split(';')[2])
 
     # If there was at least one step, record information for it
     if len(step_list) > 0:
 
         result_list = [str(startup),
-                       first_start_timing,
-                       last_end_timing,
-                       str(int(last_end_timing) - int(first_start_timing)),
-                       str(total_log_duration),
+                       step_first_start_timestamp,
+                       step_last_end_timestamp,
+                       str(int(step_last_end_timestamp) - int(step_first_start_timestamp)),
+                       str(duration_aggregated_timestamp),
                        worker_hostname,
                        worker_version,
                        worker_instance,
@@ -235,13 +276,13 @@ def parse_log(log, build_id, project_name):
 
         # In case we want to have all details on the steps executed in the build, set detailed_steps to True.
         if detailed_steps:
-            with open(temporary_dir + os.sep + "tt_" + project_name + "_" + build_id + ".csv", "w") as out_log:
+            temp_build_details_file =  "tt_" + project_name + "_" + build_id + ".csv"
+            with open(temporary_dir + os.sep + temp_build_details_file, "w") as out_log:
 
                 out_log.write(startup + '\n')
-
                 out_log.write(''.join(step_list) + '\n')
 
-                out_log.write("startup;firststart;lastend;diffduration;logaggregatedduration" + "\n")
+                out_log.write("startup;step_first_start_timestamp;step_last_end_timestamp;duration_diff_timestamp;duration_aggregated_timestamp" + "\n")
                 out_log.write(result_line)
 
     return result_line
@@ -261,6 +302,21 @@ def merge_csv_files(folder):
                         else:
                             header_added = True
                         copyfileobj(infile, outfile)
+
+
+# Adopted from https://stackoverflow.com/a/4628148
+def parse_time(time_str):
+    parts = duration_regex.match(time_str)
+    if not parts:
+        return
+    parts = parts.groupdict()
+    time_params = {}
+
+    for (name, param) in parts.items():
+        print(name)
+        if param:
+            time_params[name] = int(param)
+    return timedelta(**time_params).seconds
 
 
 if __name__ == '__main__':
@@ -303,5 +359,3 @@ if __name__ == '__main__':
 
     end_time = time.time()
     print("Done in %s" % (end_time - start_time))
-
-

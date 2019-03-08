@@ -1,111 +1,571 @@
 % Encoding: UTF-8
 
+@Article{ortu2018angry,
+  author  = {Ortu, Marco and Pinna, Andrea and Tonelli, Roberto and Marchesi, Michele and Bowes, David and Destefanis, Giuseppe},
+  title   = {Angry-Builds: An Empirical Study Of Affect Metrics and Builds Success on GitHub Ecosystem},
+  journal = {XP},
+  year    = {2018},
+  volume  = {18},
+  pages   = {21--25},
+}
+
 @InProceedings{beller2017oops,
-  author       = {Beller, Moritz and Gousios, Georgios and Zaidman, Andy},
-  title        = {Oops, my tests broke the build: An explorative analysis of Travis CI with GitHub},
-  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
-  year         = {2017},
-  pages        = {356--367},
-  organization = {IEEE},
+  author    = {Moritz Beller and Georgios Gousios and Andy Zaidman},
+  title     = {Oops, my tests broke the build: an explorative analysis of Travis{CI} with GitHub},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {356--367},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{xia2017empirical,
+  author    = {J. {Xia} and Y. {Li} and C. {Wang}},
+  title     = {An Empirical Study on the Cross-Project Predictability of Continuous Integration Outcomes},
+  booktitle = {2017 14th Web Information Systems and Applications Conference (WISA)},
+  year      = {2017},
+  pages     = {234-239},
+  month     = {Nov},
+  doi       = {10.1109/WISA.2017.53},
+  keywords  = {pattern classification;project management;public domain software;software development management;team working;cross-project prediction;project-level selection;build-level selection;optimal prediction results;cross-project build predictions;cross-project predictability;continuous integration outcomes;opensource projects;development team;classifiers;data selection;Burak Filter;Bellwether Strategy;software development;Measurement;Training;Decision trees;Open source software;Data mining;History;Cross-project;Build Prediction;Continuous Integration;Classifier},
+}
+
+@InProceedings{baltes2018influence,
+  author    = {Baltes, Sebastian and Knack, Jascha and Anastasiou, Daniel and Tymann, Ralf and Diehl, Stephan},
+  title     = {(No) Influence of Continuous Integration on the Commit Activity in GitHub Projects},
+  booktitle = {Proceedings of the 4th ACM SIGSOFT International Workshop on Software Analytics},
+  year      = {2018},
+  series    = {SWAN 2018},
+  pages     = {1--7},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {3278143},
+  doi       = {10.1145/3278142.3278143},
+  isbn      = {978-1-4503-6056-2},
+  keywords  = {commit activity, continuous integration, mining software repositories, open source software},
+  location  = {Lake Buena Vista, FL, USA},
+  numpages  = {7},
+  url       = {http://doi.acm.org/10.1145/3278142.3278143},
+}
+
+@InProceedings{zeindl2018measuring,
+  author    = {M. {Zeindl} and C. {Facchi}},
+  title     = {Measuring Architectural Misfit: A Preliminary Real Life Study},
+  booktitle = {2018 IEEE/WIC/ACM International Conference on Web Intelligence (WI)},
+  year      = {2018},
+  pages     = {655-659},
+  month     = {Dec},
+  doi       = {10.1109/WI.2018.00-18},
+  keywords  = {software architecture;software development management;software maintenance;software quality;preliminary real life study;suited physical structure;large-scale software development;subtle decay;large-scale software project;architectural fit;software architects;software product;sliding window approach;time window;prediction error;architectural misfit;Software;Measurement;Couplings;Predictive models;Computer architecture;Computer bugs;Radio frequency;Computer aided analysis, Software maintenance, Software quality, Software architecture, Machine learning},
+}
+
+@InProceedings{xia2017could,
+  author    = {J. {Xia} and Y. {Li}},
+  title     = {Could We Predict the Result of a Continuous Integration Build? An Empirical Study},
+  booktitle = {2017 IEEE International Conference on Software Quality, Reliability and Security Companion (QRS-C)},
+  year      = {2017},
+  pages     = {311-315},
+  month     = {July},
+  doi       = {10.1109/QRS-C.2017.59},
+  keywords  = {pattern classification;program testing;public domain software;software engineering;cooperatiive software development;software build;open-source projects;prediction models;cross-validation;online predictions;TravisTorrent;prediction performance;continuous integration build;Predictive models;Measurement;Decision trees;Boosting;Open source software;Multilayer perceptrons;Build Prediction;Cross Validation;Continuous Integration},
+}
+
+@Article{danglot2018automatic,
+  author  = {Benjamin Danglot and Oscar Luis Vera{-}P{\'{e}}rez and Benoit Baudry and Martin Monperrus},
+  title   = {Automatic Test Improvement with DSpot: a Study with Ten Mature Open-Source Projects},
+  journal = {CoRR},
+  year    = {2018},
+  volume  = {abs/1811.08330},
+}
+
+@Article{palomba2019smell,
+  author  = {Palomba, Fabio and Zaidman, Andy},
+  title   = {The smell of fear: On the relation between test smells and flaky tests},
+  journal = {Journal of Empirical Software Engineering},
+  year    = {2019},
+}
+
+@Article{delfim2019bears,
+  author  = {Fernanda Madeiral Delfim and Simon Urli and Marcelo de Almeida Maia and Martin Monperrus},
+  title   = {Bears: An Extensible Java Bug Benchmark for Automatic Program Repair Studies},
+  journal = {CoRR},
+  year    = {2019},
+  volume  = {abs/1901.06024},
+}
+
+@Article{abdalkareem2019which,
+  author   = {R. {Abdalkareem} and S. {Mujahid} and E. {Shihab} and J. {Rilling}},
+  title    = {Which Commits Can Be CI Skipped?},
+  journal  = {IEEE Transactions on Software Engineering},
+  year     = {2019},
+  pages    = {1-1},
+  issn     = {0098-5589},
+  doi      = {10.1109/TSE.2019.2897300},
+  keywords = {Java;Software;Prototypes;Tools;Virtual machining;Data collection;Manuals;Continuous Integration;Travis CI;Build Status;Mining Software Repository},
+}
+
+@InProceedings{kessel2018integrating,
+  author    = {Marcus Kessel and Colin Atkinson},
+  title     = {Integrating reuse into the rapid, continuous software engineering cycle through test-driven search},
+  booktitle = {RCoSE@ICSE},
+  year      = {2018},
+  pages     = {8--11},
+  publisher = {{ACM}},
+}
+
+@InProceedings{shi2018evaluating,
+  author    = {August Shi and Alex Gyori and Suleman Mahmood and Peiyuan Zhao and Darko Marinov},
+  title     = {Evaluating test-suite reduction in real software evolution},
+  booktitle = {{ISSTA}},
+  year      = {2018},
+  pages     = {84--94},
+  publisher = {{ACM}},
+}
+
+@InProceedings{vega2018pinset,
+  author    = {Alfonso de la Vega and Pablo S{\'{a}}nchez and Dimitrios S. Kolovos},
+  title     = {Pinset: {A} {DSL} for Extracting Datasets from Models for Data Mining-Based Quality Analysis},
+  booktitle = {{QUATIC}},
+  year      = {2018},
+  pages     = {83--91},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{gousios2018big,
+  author    = {Georgios Gousios},
+  title     = {Big data software analytics with Apache Spark},
+  booktitle = {{ICSE} (Companion Volume)},
+  year      = {2018},
+  pages     = {542--543},
+  publisher = {{ACM}},
+}
+
+@InProceedings{vassallo2018continuous,
+  author    = {Carmine Vassallo and Fabio Palomba and Alberto Bacchelli and Harald C. Gall},
+  title     = {Continuous code quality: are we (really) doing that?},
+  booktitle = {{ASE}},
+  year      = {2018},
+  pages     = {790--795},
+  publisher = {{ACM}},
 }
 
 @InProceedings{cito2017empirical,
-  author       = {Cito, J{\"u}rgen and Schermann, Gerald and Wittern, John Erik and Leitner, Philipp and Zumberi, Sali and Gall, Harald C},
-  title        = {An empirical analysis of the Docker container ecosystem on GitHub},
-  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
-  year         = {2017},
-  pages        = {323--333},
-  organization = {IEEE},
-}
-
-@InProceedings{rausch2017empirical,
-  author       = {Rausch, Thomas and Hummer, Waldemar and Leitner, Philipp and Schulte, Stefan},
-  title        = {An empirical analysis of build failures in the continuous integration workflows of Java-based open-source software},
-  booktitle    = {Proceedings of the 14th International Conference on Mining Software Repositories},
-  year         = {2017},
-  pages        = {345--355},
-  organization = {IEEE Press},
-}
-
-@InProceedings{zampetti2017open,
-  author       = {Zampetti, Fiorella and Scalabrino, Simone and Oliveto, Rocco and Canfora, Gerardo and Di Penta, Massimiliano},
-  title        = {How open source projects use static code analysis tools in continuous integration pipelines},
-  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
-  year         = {2017},
-  pages        = {334--344},
-  organization = {IEEE},
-}
-
-@InProceedings{vassallo2017tale,
-  author       = {Vassallo, Carmine and Schermann, Gerald and Zampetti, Fiorella and Romano, Daniele and Leitner, Philipp and Zaidman, Andy and Di Penta, Massimiliano and Panichella, Sebastiano},
-  title        = {A tale of CI build failures: An open source and a financial organization perspective},
-  booktitle    = {Software Maintenance and Evolution (ICSME), 2017 IEEE International Conference on},
-  year         = {2017},
-  pages        = {183--193},
-  organization = {IEEE},
-}
-
-@InProceedings{rebouccas2017does,
-  author       = {Rebou{\c{c}}as, Marcel and Santos, Renato O and Pinto, Gustavo and Castor, Fernando},
-  title        = {How does contributors' involvement influence the build status of an open-source software project?},
-  booktitle    = {Proceedings of the 14th International Conference on Mining Software Repositories},
-  year         = {2017},
-  pages        = {475--478},
-  organization = {IEEE Press},
-}
-
-@InProceedings{islam2017insights,
-  author       = {Islam, Md Rakibul and Zibran, Minhaz F},
-  title        = {Insights into continuous integration build failures},
-  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
-  year         = {2017},
-  pages        = {467--470},
-  organization = {IEEE},
+  author    = {J{\"{u}}rgen Cito and Gerald Schermann and John Erik Wittern and Philipp Leitner and Sali Zumberi and Harald C. Gall},
+  title     = {An empirical analysis of the docker container ecosystem on GitHub},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {323--333},
+  publisher = {{IEEE} Computer Society},
 }
 
 @InProceedings{zhao2017impact,
-  author       = {Zhao, Yangyang and Serebrenik, Alexander and Zhou, Yuming and Filkov, Vladimir and Vasilescu, Bogdan},
-  title        = {The impact of continuous integration on other software development practices: a large-scale empirical study},
-  booktitle    = {Proceedings of the 32nd IEEE/ACM International Conference on Automated Software Engineering},
-  year         = {2017},
-  pages        = {60--71},
-  organization = {IEEE Press},
+  author    = {Yangyang Zhao and Alexander Serebrenik and Yuming Zhou and Vladimir Filkov and Bogdan Vasilescu},
+  title     = {The impact of continuous integration on other software development practices: a large-scale empirical study},
+  booktitle = {{ASE}},
+  year      = {2017},
+  pages     = {60--71},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{zampetti2017how,
+  author    = {Fiorella Zampetti and Simone Scalabrino and Rocco Oliveto and Gerardo Canfora and Massimiliano Di Penta},
+  title     = {How open source projects use static code analysis tools in continuous integration pipelines},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {334--344},
+  publisher = {{IEEE} Computer Society},
 }
 
 @InProceedings{palomba2017does,
-  author       = {Palomba, Fabio and Zaidman, Andy},
-  title        = {Does refactoring of test smells induce fixing flaky tests?},
-  booktitle    = {Software Maintenance and Evolution (ICSME), 2017 IEEE International Conference on},
-  year         = {2017},
-  pages        = {1--12},
-  organization = {IEEE},
+  author    = {Fabio Palomba and Andy Zaidman},
+  title     = {Does Refactoring of Test Smells Induce Fixing Flaky Tests?},
+  booktitle = {{ICSME}},
+  year      = {2017},
+  pages     = {1--12},
+  publisher = {{IEEE} Computer Society},
 }
 
-@InProceedings{gousios2017mining,
-  author       = {Gousios, Georgios and Spinellis, Diomidis},
-  title        = {Mining software engineering data from GitHub},
-  booktitle    = {Software Engineering Companion (ICSE-C), 2017 IEEE/ACM 39th International Conference on},
-  year         = {2017},
-  pages        = {501--502},
-  organization = {IEEE},
+@InProceedings{rausch2017empirical,
+  author    = {Thomas Rausch and Waldemar Hummer and Philipp Leitner and Stefan Schulte},
+  title     = {An empirical analysis of build failures in the continuous integration workflows of Java-based open-source software},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {345--355},
+  publisher = {{IEEE} Computer Society},
 }
 
-@InProceedings{souza2017sentiment,
-  author       = {Souza, Rodrigo and Silva, Bruno},
-  title        = {Sentiment analysis of Travis CI builds},
-  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
-  year         = {2017},
-  pages        = {459--462},
-  organization = {IEEE},
+@InProceedings{vassallo2017tale,
+  author    = {Carmine Vassallo and Gerald Schermann and Fiorella Zampetti and Daniele Romano and Philipp Leitner and Andy Zaidman and Massimiliano Di Penta and Sebastiano Panichella},
+  title     = {A Tale of {CI} Build Failures: An Open Source and a Financial Organization Perspective},
+  booktitle = {{ICSME}},
+  year      = {2017},
+  pages     = {183--193},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{reboucas2017how,
+  author    = {Marcel Rebou{\c{c}}as and Renato O. Santos and Gustavo Pinto and Fernando Castor},
+  title     = {How does contributors' involvement influence the build status of an open-source software project?},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {475--478},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{bell2018deflaker,
+  author    = {Jonathan Bell and Owolabi Legunsen and Michael Hilton and Lamyaa Eloussi and Tifany Yung and Darko Marinov},
+  title     = {DeFlaker: automatically detecting flaky tests},
+  booktitle = {{ICSE}},
+  year      = {2018},
+  pages     = {433--444},
+  publisher = {{ACM}},
+}
+
+@InProceedings{vassallo2018context,
+  author    = {Carmine Vassallo and Sebastiano Panichella and Fabio Palomba and Sebastian Proksch and Andy Zaidman and Harald C. Gall},
+  title     = {Context is king: The developer perspective on the usage of static analysis tools},
+  booktitle = {{SANER}},
+  year      = {2018},
+  pages     = {38--49},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{hassan2017automatic,
+  author    = {Foyzul Hassan and Shaikh Mostafa and Edmund S. L. Lam and Xiaoyin Wang},
+  title     = {Automatic Building of Java Projects in Software Repositories: {A} Study on Feasibility and Challenges},
+  booktitle = {{ESEM}},
+  year      = {2017},
+  pages     = {38--47},
+  publisher = {{IEEE} Computer Society},
 }
 
 @InProceedings{ni2017cost,
-  author       = {Ni, Ansong and Li, Ming},
-  title        = {Cost-effective build outcome prediction using cascaded classifiers},
-  booktitle    = {Mining Software Repositories (MSR), 2017 IEEE/ACM 14th International Conference on},
-  year         = {2017},
-  pages        = {455--458},
-  organization = {IEEE},
+  author    = {Ansong Ni and Ming Li},
+  title     = {Cost-effective build outcome prediction using cascaded classifiers},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {455--458},
+  publisher = {{IEEE} Computer Society},
+}
+
+@Article{catolino2018enhancing,
+  author  = {Gemma Catolino and Fabio Palomba and Andrea De Lucia and Filomena Ferrucci and Andy Zaidman},
+  title   = {Enhancing change prediction models using developer-related factors},
+  journal = {Journal of Systems and Software},
+  year    = {2018},
+  volume  = {143},
+  pages   = {14--28},
+}
+
+@InProceedings{paixao2017interplay,
+  author    = {Kl{\'{e}}risson V. R. Paix{\~{a}}o and Cr{\'{\i}}cia Z. Fel{\'{\i}}cio and Fernanda Madeiral Delfim and Marcelo de Almeida Maia},
+  title     = {On the interplay between non-functional requirements and builds on continuous integration},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {479--482},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{hassan2018hirebuild,
+  author    = {Foyzul Hassan and Xiaoyin Wang},
+  title     = {HireBuild: an automatic approach to history-driven repair of build scripts},
+  booktitle = {{ICSE}},
+  year      = {2018},
+  pages     = {1078--1089},
+  publisher = {{ACM}},
+}
+
+@InProceedings{souza2017sentiment,
+  author    = {Rodrigo Souza and Bruno Silva},
+  title     = {Sentiment analysis of Travis {CI} builds},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {459--462},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{macho2018automatically,
+  author    = {Christian Macho and Shane McIntosh and Martin Pinzger},
+  title     = {Automatically repairing dependency-related build breakage},
+  booktitle = {{SANER}},
+  year      = {2018},
+  pages     = {106--117},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{islam2017insights,
+  author    = {Md Rakibul Islam and Minhaz F. Zibran},
+  title     = {Insights into continuous integration build failures},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {467--470},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{gousios2017mining,
+  author    = {Georgios Gousios and Diomidis Spinellis},
+  title     = {Mining software engineering data from GitHub},
+  booktitle = {{ICSE} (Companion Volume)},
+  year      = {2017},
+  pages     = {501--502},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{madeyski2017continuous,
+  author    = {Lech Madeyski and Marcin Kawalerowicz},
+  title     = {Continuous defect prediction: the idea and a related dataset},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {515--518},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{bisong2017built,
+  author    = {Ekaba Bisong and Eric Tran and Olga Baysal},
+  title     = {Built to last or built too fast?: evaluating prediction models for build times},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {487--490},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{soto2017analyzing,
+  author    = {Mauricio Soto and Zack Coker and Claire {Le Goues}},
+  title     = {Analyzing the impact of social attributes on commit integration success},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {483--486},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{gkortzis2018vulinoss,
+  author    = {Antonios Gkortzis and Dimitris Mitropoulos and Diomidis Spinellis},
+  title     = {VulinOSS: a dataset of security vulnerabilities in open-source systems},
+  booktitle = {{MSR}},
+  year      = {2018},
+  pages     = {18--21},
+  publisher = {{ACM}},
+}
+
+@Article{haghighatkhah2018test,
+  author  = {Alireza Haghighatkhah and Mika M{\"{a}}ntyl{\"{a}} and Markku Oivo and Pasi Kuvaja},
+  title   = {Test prioritization in continuous integration environments},
+  journal = {Journal of Systems and Software},
+  year    = {2018},
+  volume  = {146},
+  pages   = {80--98},
+}
+
+@InProceedings{luo2017what,
+  author    = {Yang Luo and Yangyang Zhao and Wanwangying Ma and Lin Chen},
+  title     = {What are the Factors Impacting Build Breakage?},
+  booktitle = {{WISA}},
+  year      = {2017},
+  pages     = {139--142},
+  publisher = {{IEEE}},
+}
+
+@InProceedings{hassan2017change,
+  author        = {Foyzul Hassan and Xiaoyin Wang},
+  title         = {Change-Aware Build Prediction Model for Stall Avoidance in Continuous Integration},
+  booktitle     = {{ESEM}},
+  year          = {2017},
+  pages         = {157--162},
+  publisher     = {{IEEE} Computer Society},
+  __markedentry = {[:3]},
+}
+
+@InProceedings{orellana2017differences,
+  author    = {Gerardo Orellana and Gulsher Laghari and Alessandro Murgia and Serge Demeyer},
+  title     = {On the differences between unit and integration testing in the travistorrent dataset},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {451--454},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{muylaert2017prevalence,
+  author    = {Ward Muylaert and Coen De Roover},
+  title     = {Prevalence of botched code integrations},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {503--506},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{rahman2017impact,
+  author    = {Mohammad Masudur Rahman and Chanchal K. Roy},
+  title     = {Impact of continuous integration on code reviews},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {499--502},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{gautam2017empirical,
+  author    = {Aakash Gautam and Saket Vishwasrao and Francisco Servant},
+  title     = {An empirical study of activity, popularity, size, testing, and stability in continuous integration},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {495--498},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{khan2017impact,
+  author    = {Yusaira Khan and Yash Gupta and Keheliya Gallaba and Shane McIntosh},
+  title     = {The impact of the adoption of continuous integration on developer attraction and retention},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {491--494},
+  publisher = {{IEEE} Computer Society},
+}
+
+@InProceedings{atchison2017time,
+  author        = {Abigail Atchison and Christina Berardi and Natalie Best and Elizabeth Stevens and Erik Linstead},
+  title         = {A time series analysis of TravisTorrent builds: to everything there is a season},
+  booktitle     = {{MSR}},
+  year          = {2017},
+  pages         = {463--466},
+  publisher     = {{IEEE} Computer Society},
+  __markedentry = {[:5]},
+}
+
+@InProceedings{dimitropoulos2017continuous,
+  author    = {P. {Dimitropoulos} and Z. {Aung} and D. {Svetinovic}},
+  title     = {Continuous integration build breakage rationale: Travis data case study},
+  booktitle = {2017 International Conference on Infocom Technologies and Unmanned Systems (Trends and Future Directions) (ICTUS)},
+  year      = {2017},
+  pages     = {639-645},
+  month     = {Dec},
+  doi       = {10.1109/ICTUS.2017.8286087},
+  keywords  = {program diagnostics;project management;software engineering;source code (software);continuous integration;breakage rationale;travis data case study;software engineering;quantitative results;verifiable outcomes;freely available data;Travis CI;deep analysis;project source code;data set;TravisTorrent;GitHub;continuous integration;Travis CI;GitHub;TravisTorrent},
+}
+
+@Article{pinto2018work,
+  author  = {Gustavo Pinto and Fernando Castor and Rodrigo Bonif{\'{a}}cio and Marcel Rebou{\c{c}}as},
+  title   = {Work practices and challenges in continuous integration: {A} survey with Travis {CI} users},
+  journal = {Softw., Pract. Exper.},
+  year    = {2018},
+  volume  = {48},
+  number  = {12},
+  pages   = {2223--2236},
+}
+
+@InProceedings{beller2018toward,
+  author    = {Moritz Beller},
+  title     = {Toward an empirical theory of feedback-driven development},
+  booktitle = {{ICSE} (Companion Volume)},
+  year      = {2018},
+  pages     = {503--505},
+  publisher = {{ACM}},
+}
+
+@InProceedings{gallaba2018noise,
+  author    = {Keheliya Gallaba and Christian Macho and Martin Pinzger and Shane McIntosh},
+  title     = {Noise and heterogeneity in historical build data: an empirical study of Travis {CI}},
+  booktitle = {{ASE}},
+  year      = {2018},
+  pages     = {87--97},
+  publisher = {{ACM}},
+}
+
+@InProceedings{manglaviti2017empirical,
+  author    = {Marco Manglaviti and Eduardo Coronado{-}Montoya and Keheliya Gallaba and Shane McIntosh},
+  title     = {An empirical study of the personnel overhead of continuous integration},
+  booktitle = {{MSR}},
+  year      = {2017},
+  pages     = {471--474},
+  publisher = {{IEEE} Computer Society},
+}
+
+@Article{chakraborty2018tree,
+  author  = {Saikat Chakraborty and Miltiadis Allamanis and Baishakhi Ray},
+  title   = {Tree2Tree Neural Translation Model for Learning Source Code Changes},
+  journal = {CoRR},
+  year    = {2018},
+  volume  = {abs/1810.00314},
+}
+
+@InProceedings{hejderup2018software,
+  author    = {Joseph Hejderup and Arie van Deursen and Georgios Gousios},
+  title     = {Software ecosystem call graph for dependency management},
+  booktitle = {{ICSE} {(NIER)}},
+  year      = {2018},
+  pages     = {101--104},
+  publisher = {{ACM}},
+}
+
+@InProceedings{schermann2018structured,
+  author    = {Gerald Schermann and Sali Zumberi and J{\"{u}}rgen Cito},
+  title     = {Structured information on state and evolution of dockerfiles on github},
+  booktitle = {{MSR}},
+  year      = {2018},
+  pages     = {26--29},
+  publisher = {{ACM}},
+}
+
+@InProceedings{volf2017screening,
+  author    = {Zahy Volf and Edi Shmueli},
+  title     = {Screening heuristics for project gating systems},
+  booktitle = {{ESEC/SIGSOFT} {FSE}},
+  year      = {2017},
+  pages     = {872--877},
+  publisher = {{ACM}},
+}
+
+@InProceedings{hilton2018large,
+  author    = {Michael Hilton and Jonathan Bell and Darko Marinov},
+  title     = {A large-scale study of test coverage evolution},
+  booktitle = {{ASE}},
+  year      = {2018},
+  pages     = {53--63},
+  publisher = {{ACM}},
+}
+
+@Article{ghaleb2019empirical,
+  author        = {Ghaleb, Taher Ahmed and da Costa, Daniel Alencar and Zou, Ying},
+  title         = {An empirical study of the long duration of continuous integration builds},
+  journal       = {Empirical Software Engineering},
+  year          = {2019},
+  month         = {Mar},
+  issn          = {1573-7616},
+  __markedentry = {[:2]},
+  abstract      = {Continuous Integration (CI) is a set of software development practices that allow software development teams to generate software builds more quickly and periodically (e.g., daily or even hourly). CI brings many advantages, such as the early identification of errors when integrating code. When builds are generated frequently, a long build duration may hold developers from performing other important tasks. Recent research has shown that a considerable amount of development time is invested on optimizing the generation of builds. However, the reasons behind long build durations are still vague and need an in-depth study. Our initial investigation shows that many projects have build durations that far exceed the acceptable build duration (i.e., 10 minutes) as reported by recent studies. In this paper, we study several characteristics of CI builds that may be associated with the long duration of CI builds. We perform an empirical study on 104,442 CI builds from 67 GitHub projects. We use mixed-effects logistic models to model long build durations across projects. Our results reveal that, in addition to common wisdom factors (e.g., project size, team size, build configuration size, and test density), there are other highly important factors to explain long build durations. We observe that rerunning failed commands multiple times is most likely to be associated with long build durations. We also find that builds may run faster if they are configured (a) to cache content that does not change often or (b) to finish as soon as all the required jobs finish. However, we observe that about 40{\%} of the studied projects do not use or misuse such configurations in their builds. In addition, we observe that triggering builds on weekdays or at daytime is most likely to have a direct relationship with long build durations. Our results suggest that developers should use proper CI build configurations to maintain successful builds and to avoid long build durations. Tool builders should supply development teams with tools to identify cacheable spots of the project in order to accelerate the generation of CI builds.},
+  day           = {01},
+  doi           = {10.1007/s10664-019-09695-9},
+  url           = {https://doi.org/10.1007/s10664-019-09695-9},
+}
+
+@InProceedings{jain2019brief,
+  author    = {Jain, Romit and Singh, Saket Kumar and Mishra, Bharavi},
+  title     = {A Brief Study on Build Failures in Continuous Integration: Causation and Effect},
+  booktitle = {Progress in Advanced Computing and Intelligent Engineering},
+  year      = {2019},
+  editor    = {Panigrahi, Chhabi Rani and Pujari, Arun K. and Misra, Sudip and Pati, Bibudhendu and Li, Kuan-Ching},
+  pages     = {17--27},
+  address   = {Singapore},
+  publisher = {Springer Singapore},
+  abstract  = {Continuous Integration (CI) has successfully tackled the problem of bug fixing owing to which it has gained immense popularity among software developers. CI encourages to commit on the go so that each bug can be traced to its source and handled accordingly. However, CI remains a practice at its core, and only a part of it can be implemented. Anything which does not follow good CI practice would pave the way for a greater number of build fails. CI's continuous nature may cause a clutter in a big team, leading to one developer's build failing the other. Numerous consecutive build fails can put the project on a standstill till the build is made clean which may cause developers to lose interest eventually. We investigate, in this paper, causation and effect of build failure in CI. We first see whether a large team size contributes to more build failure and second, whether an increasing number of consecutive build failures have any impact on the productivity of developers. We have used data provided in TravisTorrent and analysed the 3,702,595 Travis builds which mostly contain Java and Ruby as the programming language used. For both the languages, we have made a comprehensive analysis of the problem we address.},
+  isbn      = {978-981-13-0224-4},
+}
+
+@PhdThesis{kavaler2018sociotechnical,
+  author   = {David Minh Kavaler},
+  title    = {Sociotechnical Aspects of Performance and Success in Software Engineering},
+  school   = {University of California, USA},
+  year     = {2018},
+  abstract = {Modern software development is complex and increasingly collaborative. Free, crowd-based software artifacts such as Stack Overflow and GitHub are transformative; they are wildly popular development aids that benefit veterans and newcomers alike. In addition, they provide a rich, multifaceted data source, ripe for empirical analysis. Data from these software artifacts come in a large variety of forms, including natural language discussions mixed with source code, full source code version history along with issue and bug reports, documentation history and coverage, etc. This availability of data sourced from a wide variety of underlying generative phenomena allow for complex analysis to answer nuanced questions. This work consists of multiple sub-works, utilizing data from Stack Overflow, GitHub, and the Apache Software Foundation, primarily to investigate the effects of sociotechnical measures on various metrics of performance and success. These investigations provide insights into questions such as: does communication style affect issue resolution times? And, does API “newness” affect crowd documentation speed and amount? Answers to such questions inform the software development community regarding shortcomings in their community structure and associated collaboration tools, and elucidate social phenomena which affect technical outcomes, hitherto unseen or undiscussed.},
+  isbn     = {9780438628373},
+  journal  = {ProQuest Dissertations and Theses},
+  keywords = {Applied sciences; Crowd documentation speed; Resolution times; Technical outcomes; Computer science; 0984:Computer science},
+  language = {EN},
+  pages    = {233},
+  url      = {https://search.proquest.com/docview/2133558699?accountid=14133},
+}
+
+@Article{muylaert2017automated,
+  author = {Muylaert, Ward and De Roover, Coen},
+  title  = {Automated Categorisation of Breaking Merge Commits Work in Progress},
+  year   = {2017},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

@@ -1,0 +1,1 @@
+select gh_project_name,tr_build_id,tr_build_number,tr_job_id,gh_pushed_at from travistorrent_8_2_2017 WHERE gh_pushed_at != "NULL" ORDER BY tr_build_id DESC LIMIT 10;

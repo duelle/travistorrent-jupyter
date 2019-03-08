@@ -1,0 +1,33 @@
+buildlog-data-travis.csv
+tr_build_id		-> long
+tr_job_id		-> long
+tr_build_number		-> int
+tr_original_commit	-> string
+tr_log_lan		-> string
+tr_log_status		-> string
+tr_log_setup_time	-> int
+tr_log_analyzer		-> string
+tr_log_frameworks	-> string
+tr_log_bool_tests_ran	-> boolean
+tr_log_bool_tests_failed-> boolean
+tr_log_num_tests_ok	-> int
+tr_log_num_tests_failed	-> int
+tr_log_num_tests_run	-> int
+tr_log_num_tests_skipped-> int
+tr_log_num_test_suites_run	-> int
+tr_log_num_test_suites_ok	-> int
+tr_log_num_test_suites_failed	-> int
+tr_log_tests_failed	-> string
+
+
+repo-data-travis.csv
+build_id	-> long
+commit		-> string
+pull_req	-> int
+branch		-> string
+status		-> string
+duration	-> int
+started_at	-> date
+jobs		-> string
+event_type	-> string
+
