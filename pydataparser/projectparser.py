@@ -3,8 +3,6 @@
 # TODO:
 # - fix UTC issue: database/dateissue.txt
 # - create DDL for extracted data
-# - leave out headers in project files and put project name as column
-# - merge all project-logs together in one file
 # - run through all logs and import them into the database (repo-data, buildlog, extracted)
 
 
@@ -30,7 +28,7 @@ overwrite_enabled = False
 parallel_enabled = True
 
 # Number of parallel workers (in case parallel execution is enabled
-max_parallel_workers = 7
+max_parallel_workers = 8
 
 if local_test:
     extdisk_path = "/tmp/tt_test/travistorrent"
@@ -45,6 +43,8 @@ buildlog_file = "buildlog-data-travis.csv"
 
 repodata_path = result_dir + os.sep + "repodata"
 repodata_file = "repo-data-travis.csv"
+
+extracteddata_path = result_dir + os.sep + "extracteddata"
 
 # Directory where unpacking and parsing is done (best-case in memory)
 temporary_dir = "/tmp/tt"
@@ -71,7 +71,7 @@ def process_project(src_file_name):
         temp_log_file_name = temporary_dir + os.sep + "tt_" + project_name + ".csv"
         log_file_basename = os.path.basename(temp_log_file_name)
 
-        target_log_file = result_dir + os.sep + log_file_basename
+        target_log_file = extracteddata_path + os.sep + log_file_basename
 
         if os.path.isfile(target_log_file) and not overwrite_enabled:
             print(project_name + " skipped (exists).")
@@ -191,7 +191,7 @@ def parse_log(log, build_id, project_name):
 
     step_list = []
 
-    first_start_timing = 0
+    step_first_start_timestamp = 0
     step_last_end_timestamp = 0
     duration_aggregated_timestamp = 0
 
@@ -313,7 +313,6 @@ def parse_time(time_str):
     time_params = {}
 
     for (name, param) in parts.items():
-        print(name)
         if param:
             time_params[name] = int(param)
     return timedelta(**time_params).seconds
@@ -339,6 +338,9 @@ if __name__ == '__main__':
     if not os.path.exists(repodata_path):
         os.makedirs(repodata_path)
 
+    if not os.path.exists(extracteddata_path):
+        os.makedirs(extracteddata_path)
+
     if parallel_enabled:
         with concurrent.futures.ProcessPoolExecutor(max_workers=max_parallel_workers) as executor:
             for tar_file in os.listdir(project_dir):
@@ -351,10 +353,10 @@ if __name__ == '__main__':
 
     if parallel_enabled:
         with concurrent.futures.ProcessPoolExecutor(max_workers=max_parallel_workers) as executor:
-            for csv_folder in [buildlog_path, repodata_path]:
+            for csv_folder in [buildlog_path, repodata_path, extracteddata_path]:
                 merge_csv_files(csv_folder)
     else:
-        for csv_folder in [buildlog_path, repodata_path]:
+        for csv_folder in [buildlog_path, repodata_path, extracteddata_path]:
             merge_csv_files(csv_folder)
 
     end_time = time.time()
