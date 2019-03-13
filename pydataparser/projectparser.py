@@ -318,6 +318,16 @@ def parse_time(time_str):
     return timedelta(**time_params).seconds
 
 
+# Process input file and remove trailing "UTC" labels
+def remove_tz_label(file, column):
+    with open(file, "rb") as infile:
+        with open("/tmp/1_file.csv", "wb") as outfile:
+          for line_in in infile:
+             print(line_in.replace(' UTC,',','))
+
+
+
+
 if __name__ == '__main__':
     '''
     Traverses all tgz-files in the given folder and calls following process command.
