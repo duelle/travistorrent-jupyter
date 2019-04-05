@@ -16,7 +16,7 @@ import tarfile
 import tempfile
 import concurrent.futures
 import time
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 
 # If set to true, the results will be stored in /tmp/ directory instead of externally
 local_test = False
@@ -66,7 +66,6 @@ def process_project(src_file_name):
         project_name = os.path.basename(src_file_name)[:-4]  # remove file extension
 
         project = project_name.replace('@','/')
-
 
         temp_log_file_name = temporary_dir + os.sep + "tt_" + project_name + ".csv"
         log_file_basename = os.path.basename(temp_log_file_name)
@@ -189,6 +188,18 @@ def parse_log(log, build_id, project_name):
     os_dist_release = ''
     os_description = ''
 
+    # True if there is a "Using worker: .." header
+    using_worker_header = False
+
+    # True if there is a travis_fold worker_info block
+    travis_fold_worker_info = False
+
+    # True if there is a travis_fold system_info block
+    travis_fold_system_info = False
+
+    # Represents the total number of travis_folds
+    travis_fold_count = 0
+
     step_list = []
 
     step_first_start_timestamp = 0
@@ -202,7 +213,24 @@ def parse_log(log, build_id, project_name):
 
     incomplete_command = ""
 
+    first_line_read = False
+
     for line in log.splitlines():
+
+        if not first_line_read:
+            first_line_read = True
+            if line.startswith("Using worker:"):
+                using_worker_header = True
+                worker_instance = line.split(' ')[1]
+
+        if line.startswith("travis_fold:start"):
+            travis_fold_count += 1
+
+        if (not travis_fold_system_info) and line.startswith("travis_fold:start:system_info"):
+            travis_fold_system_info = True
+
+        if (not travis_fold_worker_info) and line.startswith("travis_fold:start:worker_info"):
+            travis_fold_worker_info = True
 
         # record startup time
         if line.startswith("startup:"):
@@ -315,7 +343,7 @@ def parse_time(time_str):
     for (name, param) in parts.items():
         if param:
             time_params[name] = int(param)
-    return timedelta(**time_params).seconds
+    return datetime.timedelta(**time_params).seconds
 
 
 # Process input file and remove trailing "UTC" labels
@@ -325,7 +353,12 @@ def remove_tz_label(file, column):
           for line_in in infile:
              print(line_in.replace(' UTC,',','))
 
+# Converts a travis_time timestamp to a DateTime string
+def convertTimestampToDatetime(timestamp):
+    # Scale down resolution to seconds
+    ts = int(timestamp)/1000000000
 
+    return datetime.utcfromtimestamp(ts)
 
 
 if __name__ == '__main__':
